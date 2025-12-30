@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Tic Tac Toe</title>
+    <style>
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 5px;
+            width: 300px;
+            margin: 0 auto;
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            background-color: lightblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple Tic Tac Toe</h1>
+    <div class="board">
+        <div class="cell" onclick="play(this)"></div>
+        <div class="cell" onclick="play(this)"></div>
+        <div class="cell" onclick="play(this)"></div>
+        <div class="cell" onclick="play(this)"></div>
+        <div class="cell" onclick="play(this)"></div>
+        <div class="cell" onclick="play(this)"></div>
+        <div class="cell" onclick="play(this)"></div>
+        <div class="cell" onclick="play(this)"></div>
+        <div class="cell" onclick="play(this)"></div>
+    </div>
+
+    <script>
+        let currentPlayer = 'X';
+
+        function play(cell) {
+            if (cell.innerText === '') {
+                cell.innerText = currentPlayer;
+                if (checkWin()) {
+                    alert(currentPlayer + ' wins!');
+                    resetBoard();
+                } else {
+                    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                }
+            }
+        }
+
+        function checkWin() {
+            const cells = document.querySelectorAll('.cell');
+            const winningCombos = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6]
+            ];
+
+            for (let combo of winningCombos) {
+                if (cells[combo[0]].innerText !== '' &&
+                    cells[combo[0]].innerText === cells[combo[1]].innerText &&
+                    cells[combo[1]].innerText === cells[combo[2]].innerText) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        function resetBoard() {
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach(cell => {
+                cell.innerText = '';
+            });
+            currentPlayer = 'X';
+        }
+    </script>
+</body>
+</html>
